@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ZipCodes</title>
+    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src = "http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.firebase.com/js/client/1.0.11/firebase.js"></script>
+  </head>
+  <body>
+
+
+
+    <!--Begin Navbar-->
+    <div class = "navbar navbar-default navbar-static-top">
+      <div class = "container">
+
+        <button class = "navbar-toggle" data-toggle = "collapse" data-target = ".navHeaderCollapse">
+          <span class = "icon-bar"></span>
+          <span class = "icon-bar"></span>
+          <span class = "icon-bar"></span>
+        </button>
+
+        <div class = "collapse navbar-collapse navHeaderCollapse">
+          <ul class = "nav navbar-nav navbar-left">
+            <li><a href="#">What</a></li>
+            <li><a href="#">Why</a></li>
+            <li><a href="#">How</a></li>
+            <li><a href="#">Where</a></li>
+            <li><a href="#">Who</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+
+    <!--End Navbar-->
+
+    <script>
+    
+      // Get a reference to the root of the zips data.
+      var zipsRef = new
+      Firebase('https://resplendent-fire-1511.firebaseio.com/');
+    
+      // When the user hits submit, SEARCH database for value or whatever.
+      $(document).ready(function() {
+        $('#butt1').button().click(function() {
+            var query = document.getElementById('inpt').value;
+            var thisZipRef = new
+            Firebase('https://resplendent-fire-1511.firebaseio.com/'+query+'/Redirect');
+            thisZipRef.on('value', function(snapshot) {
+                location.href = snapshot.val();
+            });
+        });
+      });
+
+      // When the user hits submit, PUSH values to database.
+      $(document).ready(function() {
+        $("#butt2").button().click(function() {
+          var newZip = document.getElementById('inpt2').value;
+          var newZipRef = new
+          Firebase('https://resplendent-fire-1511.firebaseio.com/'+newZip);
+          var zip = $('#inpt2').val();
+          var redir = $('#inpt3').val();
+          newZipRef.set({Zip: zip, Redirect: redir}); 
+        });
+      });
+    
+    </script>
+
+    <!--Dat body doe-->
+    <div class = "container">
+        <div class = "row">
+            <img src="Logo.png" class="img-responsive center-block" alt="Responsive image">
+        </div>
+    </div>
+    <div class = "container">
+        <div class = "row">
+            <div class = "col-sm-6 col-sm-offset-3">
+                <form role="form">
+                    <div class="form-group">
+                        <input id="inpt" type="text" class="form-control" placeholder="e.g. XXYYXX">
+                    </div>
+                    <a id="butt1" type="submit" class="btn btn-default btn-lg
+                        center-block">Submit</a>
+                </form>
+                    <h4 class="text-center">OR</h3>
+                    <h2 class="text-center">Register a Zip!</h2>
+                <form role="form">
+                    <div class="form-group">
+                        <input id="inpt2" type="text" class="form-control"
+                        placeholder="Zip">
+                    </div>
+                    <div class="form-group">
+                        <input id="inpt3" type="text" class="form-control"
+                        placeholder="Redirect to: URL">
+                    </div>
+                    <a id="butt2" type="submit" class="btn btn-default btn-lg
+                        center-block">Submit</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--Begin Footer
+    <div class = "navbar navbar-default navbar-static-bottom">
+      <div class="container">
+        <p>Kindly from <a href="http://gabedb.com">Gabe Diaz-Barriga</a> and <a
+            href="http://lawrencehumphrey.com">Lawrence Humphrey</a>.</p>
+      </div>
+    </div>
+    End Footer-->
+
+
+
+    <!--<script src = "http://code.jquery.com/jquery-1.10.2.min.js"></script>-->
+    <script src = "js/bootstrap.js"></script>
+    <!--<script src = "js/demo.js"></script>-->
+
+  </body>
+</html>
+

@@ -1,0 +1,16 @@
+Search within ZC or redirect?
+Use database(redis)
+What is LESS and SASS? How do I use it? Do I want to use it?
+
+Agenda:
+
+1. Handle when they enter a nonexistent ZIP
+    -Prompt to make one
+2. Force case insensitiveness
+3. Force valid email addresses
+4. Prompt that ZIP has been added upon registration
+5. Don't overwrite existing ZIPS
+    -Give them suggestions on ones that aren't taken yet
+6. Force character limit?
+7. Implement ZIP's mortality
+
