@@ -38,19 +38,27 @@
     <!--End Navbar-->
 
     <script>
-    
+          
       // Get a reference to the root of the zips data.
+      
+      var URL = 'https://resplendent-fire-1511.firebaseio.com/';
       var zipsRef = new
-      Firebase('https://resplendent-fire-1511.firebaseio.com/');
+      Firebase(URL);
     
       // When the user hits submit, SEARCH database for value or whatever.
       $(document).ready(function() {
         $('#butt1').button().click(function() {
-            var query = document.getElementById('inpt').value;
+            var query = document.getElementById('inpt').value.toUpperCase();
             var thisZipRef = new
-            Firebase('https://resplendent-fire-1511.firebaseio.com/'+query+'/Redirect');
+            Firebase(URL+query+'/Redirect');
             thisZipRef.on('value', function(snapshot) {
-                location.href = snapshot.val();
+                if(snapshot.val() === null) {
+                    $('#registerModal').modal('toggle');
+                    document.getElementById('inpt').reset();
+                }
+                else{
+                    location.href = snapshot.val();
+                }
             });
         });
       });
@@ -58,15 +66,51 @@
       // When the user hits submit, PUSH values to database.
       $(document).ready(function() {
         $("#butt2").button().click(function() {
-          var newZip = document.getElementById('inpt2').value;
-          var newZipRef = new
-          Firebase('https://resplendent-fire-1511.firebaseio.com/'+newZip);
-          var zip = $('#inpt2').val();
-          var redir = $('#inpt3').val();
-          newZipRef.set({Zip: zip, Redirect: redir}); 
+          var newZip = document.getElementById('inpt2').value.toUpperCase();
+          if(zipExists(newZip)){
+            $('#errorRegisterModal').modal('toggle');
+            document.getElementById("inpt2").reset();
+            document.getElementById("inpt3").reset();
+          }
+          else{
+            var newZipRef = new
+            Firebase(URL+newZip);
+            var redir = $('#inpt3').val();
+            newZipRef.set({Zip: newZip, Redirect: redir});
+            $('#submitModal').modal('toggle');
+          }
         });
       });
-    
+
+      //$(document).ready(function() {
+        $("#inpt").on('keydown',function(e) {
+            if(e.keyCode === 13){
+                $('#butt1').click();
+            }
+        });
+      //});
+
+      function redirect(){
+        var query = document.getElementById('inpt').value.toUpperCase();
+        var thisZipRef = new
+        Firebase(URL+query+'/Redirect');
+        thisZipRef.on('value', function(snapshot) {
+            if(snapshot.val() === null) {
+                $('#registerModal').modal('show');
+            }
+            else{
+                location.href = snapshot.val();
+            }
+        });
+      }
+
+      function zipExists(newZip) {
+        var potentialZipsRef = new Firebase(URL+newZip);
+        potentialZipsRef.child(newZip).once('value', function(snapshot) {
+            return (snapshot.val() === null);
+        });
+      }
+
     </script>
 
     <!--Dat body doe-->
