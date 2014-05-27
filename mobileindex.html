@@ -101,7 +101,7 @@
     <!--End Modals and shit-->
     
     <script>
-    
+          
       // Get a reference to the root of the zips data.
       
       var URL = 'https://resplendent-fire-1511.firebaseio.com/';
@@ -131,8 +131,12 @@
         $("#butt2").button().click(function() {
           var newZip = document.getElementById('inpt2').value.toUpperCase();
           if(zipExists(newZip)){
+<<<<<<< HEAD
             //$('#errorRegisterModal').modal('toggle');
             alert("Zip is taken. Try another.");
+=======
+            $('#errorRegisterModal').modal('toggle');
+>>>>>>> 7c7554d2d12f280b917abd7eb348729730499316
             document.getElementById("inpt2").reset();
             document.getElementById("inpt3").reset();
           }
@@ -143,6 +147,7 @@
             newZipRef.set({Zip: newZip, Redirect: redir});
             $('#submitModal').modal('toggle');
           }
+<<<<<<< HEAD
         });
       });
 
@@ -164,6 +169,19 @@
         });
       });
 
+=======
+        });
+      });
+
+      //$(document).ready(function() {
+        $("#inpt").on('keydown',function(e) {
+            if(e.keyCode === 13){
+                $('#butt1').click();
+            }
+        });
+      //});
+
+>>>>>>> 7c7554d2d12f280b917abd7eb348729730499316
       function redirect(){
         var query = document.getElementById('inpt').value.toUpperCase();
         var thisZipRef = new
@@ -181,10 +199,17 @@
       function zipExists(newZip) {
         var potentialZipsRef = new Firebase(URL+newZip);
         potentialZipsRef.child(newZip).once('value', function(snapshot) {
+<<<<<<< HEAD
             return (snapshot.val() !== null);
         });
       }
     
+=======
+            return (snapshot.val() === null);
+        });
+      }
+
+>>>>>>> 7c7554d2d12f280b917abd7eb348729730499316
     </script>
 
     <!--Dat body doe-->
